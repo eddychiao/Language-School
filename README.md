@@ -39,8 +39,8 @@ This repo is set up to deploy to GitHub Pages automatically via
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) on every push
 to `main`. To enable it on a new repo:
 
-1. Push this repo to GitHub as `chinese-school` (the Vite `base` path in
-   `vite.config.ts` is hardcoded to `/chinese-school/` — update it if you use
+1. Push this repo to GitHub as `Language-School` (the Vite `base` path in
+   `vite.config.ts` is hardcoded to `/Language-School/` — update it if you use
    a different repo name).
 2. In the repo's **Settings → Pages**, set **Source** to **GitHub Actions**.
 3. Push to `main` — the workflow builds and publishes automatically.

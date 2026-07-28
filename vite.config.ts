@@ -5,7 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 // GitHub Pages serves project sites at <username>.github.io/<repo>/, so every
 // asset URL (JS/CSS chunks, icons, manifest) needs this prefix baked in at
 // build time. Keep in sync with the repo name if it ever changes.
-const BASE_PATH = "/chinese-school/";
+const BASE_PATH = "/Language-School/";
 
 export default defineConfig({
   base: BASE_PATH,
