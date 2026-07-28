@@ -1,0 +1,123 @@
+.wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.headerRow,
+.row {
+  display: grid;
+  grid-template-columns: 0.7fr 0.55fr 3.2fr 0.75fr 0.9fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+}
+
+.headerRow {
+  height: 44px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.825rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.row {
+  min-height: 57px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.05rem;
+  transition: background-color 0.15s ease;
+}
+
+.row:hover {
+  background: var(--color-surface);
+}
+
+.scroller {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.colHanzi {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.traditional {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.colMeaning {
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.colMeaning:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-text-muted);
+}
+
+.colMeaningExpanded {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
+.colPos {
+  color: var(--color-text-muted);
+  font-size: 0.935rem;
+}
+
+.colCheck {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .headerRow {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "hanzi check"
+      "pinyin check"
+      "meaning meaning";
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .colHanzi {
+    grid-area: hanzi;
+    white-space: normal;
+  }
+
+  .colPinyin {
+    grid-area: pinyin;
+  }
+
+  .colMeaning {
+    grid-area: meaning;
+    white-space: normal;
+  }
+
+  .colCheck {
+    grid-area: check;
+    align-items: flex-start;
+  }
+
+  .colPos {
+    display: none;
+  }
+}

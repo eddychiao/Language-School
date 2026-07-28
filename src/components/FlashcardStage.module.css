@@ -1,0 +1,70 @@
+.cardArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.progress {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.cardWrapper {
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (min-width: 768px) {
+  .cardWrapper {
+    max-width: 460px;
+  }
+}
+
+.slideRight {
+  animation: slideInFromRight 0.28s ease;
+}
+
+.slideLeft {
+  animation: slideInFromLeft 0.28s ease;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    max-width: 460px;
+  }
+}
+
+.navButton {
+  flex: 1;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.navButton:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}

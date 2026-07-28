@@ -1,0 +1,52 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.viewSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.viewSwitch:hover {
+  border-color: var(--color-accent);
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.shuffleButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.shuffleButton:hover {
+  border-color: var(--color-accent);
+}

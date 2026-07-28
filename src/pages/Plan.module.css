@@ -1,0 +1,183 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.builder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+}
+
+.sectionTitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: var(--space-2) 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.splitRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+}
+
+.numberInput {
+  width: 80px;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.select {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.createButton {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.createButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.createButton:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.planGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.planHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.planToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-1);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-text-muted);
+  transition: transform 0.2s ease;
+}
+
+.chevronCollapsed {
+  transform: rotate(-90deg);
+}
+
+.planTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.planName {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.planSubtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.removeButton {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-wrong);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  border-color: var(--color-wrong);
+}
+
+.collapseWrapper {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.collapseWrapper.collapsed {
+  grid-template-rows: 0fr;
+}
+
+.collapseInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.lessonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+  padding-top: var(--space-1);
+}

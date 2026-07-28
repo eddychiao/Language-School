@@ -1,0 +1,84 @@
+:root {
+  /* Neutral base */
+  --color-bg: #ffffff;
+  --color-surface: #f6f7f6;
+  --color-border: #e3e5e3;
+  --color-text: #23261f;
+  --color-text-muted: #6b6f68;
+
+  /* Single accent */
+  --color-accent: #1b6b4f;
+  --color-accent-hover: #155a41;
+  --color-accent-contrast: #ffffff;
+
+  /* Semantic, used sparingly */
+  --color-right: #1b8a5a;
+  --color-wrong: #c0392b;
+  --color-skip: #8a8f87;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --font-ui:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-cjk:
+    "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Heiti SC", sans-serif;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.06);
+
+  color-scheme: light;
+}
+
+/* Dark palette, applied either automatically (system preference, unless the
+   user explicitly forced light via data-theme="light") or explicitly
+   (data-theme="dark" from the Settings theme toggle). Keep both blocks below
+   in sync - they intentionally duplicate the same values. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #161815;
+    --color-surface: #1e211d;
+    --color-border: #30332e;
+    --color-text: #eceeea;
+    --color-text-muted: #9a9e96;
+
+    --color-accent: #3fae82;
+    --color-accent-hover: #59c297;
+    --color-accent-contrast: #0c0f0b;
+
+    --color-right: #3fae82;
+    --color-wrong: #e0685a;
+    --color-skip: #7b7f77;
+
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #161815;
+  --color-surface: #1e211d;
+  --color-border: #30332e;
+  --color-text: #eceeea;
+  --color-text-muted: #9a9e96;
+
+  --color-accent: #3fae82;
+  --color-accent-hover: #59c297;
+  --color-accent-contrast: #0c0f0b;
+
+  --color-right: #3fae82;
+  --color-wrong: #e0685a;
+  --color-skip: #7b7f77;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  color-scheme: dark;
+}

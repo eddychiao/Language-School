@@ -1,0 +1,109 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.summaryRow {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.stat {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.statValue {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.primaryAction,
+.secondaryAction {
+  flex: 1;
+  text-align: center;
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.primaryAction {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.primaryAction:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-accent-contrast);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+}
+
+.secondaryAction {
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.secondaryAction:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+}
+
+.levels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.levelRow {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.levelRow:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px) translateX(2px);
+  box-shadow: var(--shadow-1);
+}
+
+.levelHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-size: 0.9rem;
+}
+
+.levelCount {
+  color: var(--color-text-muted);
+}

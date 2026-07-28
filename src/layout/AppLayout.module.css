@@ -1,0 +1,236 @@
+.shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile-only top bar (title + settings icon). */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.settingsLink {
+  color: var(--color-text-muted);
+  display: inline-flex;
+}
+
+.settingsLink:hover {
+  color: var(--color-accent);
+}
+
+.langSwitch {
+  display: inline-flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.langOption {
+  padding: var(--space-1) var(--space-3);
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.langOption:hover {
+  color: var(--color-text);
+}
+
+.langOptionActiveZh {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-weight: 600;
+  box-shadow: var(--shadow-1);
+}
+
+.langOptionActiveZh:hover {
+  color: var(--color-accent-contrast);
+}
+
+.langOptionActiveEs {
+  background: var(--color-wrong);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: var(--shadow-1);
+}
+
+.langOptionActiveEs:hover {
+  color: #ffffff;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Desktop-only sidebar; hidden on mobile in favor of the bottom tab bar. */
+.sidebar {
+  display: none;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-5);
+  padding-bottom: calc(var(--space-7) + 56px);
+}
+
+.pageTransition {
+  animation: fadeInUp 0.25s ease;
+}
+
+/* Mobile-only bottom tab bar. */
+.tabBar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-2);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  transition:
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+
+.tab:active {
+  transform: scale(0.94);
+}
+
+.active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .header {
+    display: none;
+  }
+
+  .tabBar {
+    display: none;
+  }
+
+  .body {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--color-border);
+    padding: var(--space-5);
+    gap: var(--space-6);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .sidebarTitle {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-text);
+  }
+
+  .sidebar .langSwitch {
+    display: flex;
+    width: 100%;
+  }
+
+  .sidebar .langOption {
+    flex: 1;
+    text-align: center;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .sidebarLinks {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .sidebarLink {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.12s ease;
+  }
+
+  .sidebarLink:active {
+    transform: scale(0.97);
+  }
+
+  .sidebarLink:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .sidebarLinkActive {
+    background: var(--color-surface);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .sidebarSettings {
+    margin-top: auto;
+  }
+
+  .main {
+    padding: var(--space-6);
+    padding-bottom: var(--space-6);
+    max-width: 1200px;
+    margin: 0;
+  }
+}

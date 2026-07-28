@@ -1,0 +1,95 @@
+@import "./variables.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--space-3);
+}
+
+p {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+button {
+  font-family: inherit;
+  transition:
+    transform 0.12s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.hanzi {
+  font-family: var(--font-cjk);
+}
+
+/* Shared entrance animations, reused across pages via CSS Modules classes
+   that reference these global keyframe names in their `animation` property. */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

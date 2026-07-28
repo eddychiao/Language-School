@@ -1,0 +1,76 @@
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--color-bg);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-1);
+  border-color: var(--color-accent);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.count {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.primary,
+.secondary {
+  flex: 1;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  transition:
+    transform 0.12s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.secondary:hover {
+  border-color: var(--color-accent);
+}
+
+.primary {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-color: var(--color-accent);
+}
+
+.primary:hover {
+  background: var(--color-accent-hover);
+}

@@ -1,0 +1,68 @@
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+}
+
+.wrong {
+  color: var(--color-wrong);
+  background: color-mix(in srgb, var(--color-wrong) 10%, var(--color-bg));
+  border-color: color-mix(in srgb, var(--color-wrong) 28%, var(--color-border));
+}
+
+.wrong:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-wrong) 18%, var(--color-bg));
+  border-color: var(--color-wrong);
+}
+
+.skip {
+  color: var(--color-skip);
+  background: color-mix(in srgb, var(--color-skip) 10%, var(--color-bg));
+  border-color: color-mix(in srgb, var(--color-skip) 28%, var(--color-border));
+}
+
+.skip:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-skip) 18%, var(--color-bg));
+  border-color: var(--color-skip);
+}
+
+.right {
+  color: var(--color-right);
+  background: color-mix(in srgb, var(--color-right) 10%, var(--color-bg));
+  border-color: color-mix(in srgb, var(--color-right) 28%, var(--color-border));
+}
+
+.right:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-right) 18%, var(--color-bg));
+  border-color: var(--color-right);
+}
