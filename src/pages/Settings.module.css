@@ -45,6 +45,15 @@
   color: var(--color-accent-contrast);
 }
 
+.section {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 .dangerZone {
   border: 1px solid var(--color-wrong);
   border-radius: var(--radius);
@@ -56,6 +65,45 @@
 
 .sectionTitle {
   font-size: 0.9rem;
+  margin: 0;
+}
+
+.dangerZone .sectionTitle {
+  color: var(--color-wrong);
+}
+
+.buttonRow {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.secondaryButton {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  background: var(--color-border);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.importConfirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.errorText {
+  font-size: 0.85rem;
   margin: 0;
   color: var(--color-wrong);
 }

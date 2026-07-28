@@ -13,7 +13,7 @@ import type {
   Settings,
   StudyData,
 } from "../types";
-import { defaultData, loadData, saveData } from "./storage";
+import { defaultData, loadData, normalizeData, saveData } from "./storage";
 import { gradeCard } from "../srs/scheduler";
 
 interface StudyStore {
@@ -26,6 +26,8 @@ interface StudyStore {
   removeLessonPlan: (id: string) => void;
   updateSettings: (patch: Partial<Settings>) => void;
   resetProgress: () => void;
+  /** Replaces all local data with a previously exported file. Returns false if the file isn't a recognized export. */
+  importData: (parsed: unknown) => boolean;
 }
 
 const StudyStoreContext = createContext<StudyStore | null>(null);
@@ -137,6 +139,16 @@ export function StudyStoreProvider({ children }: { children: ReactNode }) {
     commit(() => defaultData());
   }, [commit]);
 
+  const importData = useCallback(
+    (parsed: unknown) => {
+      const normalized = normalizeData(parsed);
+      if (!normalized) return false;
+      commit(() => normalized);
+      return true;
+    },
+    [commit],
+  );
+
   const value = useMemo<StudyStore>(
     () => ({
       data,
@@ -148,6 +160,7 @@ export function StudyStoreProvider({ children }: { children: ReactNode }) {
       removeLessonPlan,
       updateSettings,
       resetProgress,
+      importData,
     }),
     [
       data,
@@ -159,6 +172,7 @@ export function StudyStoreProvider({ children }: { children: ReactNode }) {
       removeLessonPlan,
       updateSettings,
       resetProgress,
+      importData,
     ],
   );
 

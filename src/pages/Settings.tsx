@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useStudyStore } from "../store/useStudyStore";
 import { useLang } from "../lib/useLang";
 import { Toggle } from "../components/Toggle";
@@ -13,8 +13,11 @@ const THEME_OPTIONS: { value: SettingsType["theme"]; label: string }[] = [
 
 export function Settings() {
   const lang = useLang();
-  const { data, updateSettings, resetProgress } = useStudyStore();
+  const { data, updateSettings, resetProgress, importData } = useStudyStore();
   const [confirming, setConfirming] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [pendingImport, setPendingImport] = useState<unknown>(null);
+  const [importError, setImportError] = useState(false);
 
   const handleReset = () => {
     if (!confirming) {
@@ -23,6 +26,37 @@ export function Settings() {
     }
     resetProgress();
     setConfirming(false);
+  };
+
+  const handleExport = () => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `language-school-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    try {
+      setPendingImport(JSON.parse(await file.text()));
+      setImportError(false);
+    } catch {
+      setPendingImport(null);
+      setImportError(true);
+    }
+  };
+
+  const confirmImport = () => {
+    const ok = importData(pendingImport);
+    setPendingImport(null);
+    setImportError(!ok);
   };
 
   return (
@@ -69,6 +103,68 @@ export function Settings() {
           </div>
         </>
       )}
+
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Backup &amp; transfer</h2>
+        <p className={styles.dangerText}>
+          Export your progress to a file, then import it on another browser or
+          device to bring your memorized words, SRS progress, and stats with
+          you.
+        </p>
+        <div className={styles.buttonRow}>
+          <button
+            type="button"
+            className={styles.secondaryButton}
+            onClick={handleExport}
+          >
+            Export progress
+          </button>
+          <button
+            type="button"
+            className={styles.secondaryButton}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Import progress
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json"
+            className={styles.hiddenInput}
+            onChange={handleFileChange}
+          />
+        </div>
+        {pendingImport !== null && (
+          <div className={styles.importConfirm}>
+            <p className={styles.dangerText}>
+              Importing will replace all current progress on this device.
+              This cannot be undone.
+            </p>
+            <div className={styles.buttonRow}>
+              <button
+                type="button"
+                className={styles.resetButton}
+                onClick={confirmImport}
+              >
+                Replace progress
+              </button>
+              <button
+                type="button"
+                className={styles.secondaryButton}
+                onClick={() => setPendingImport(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+        {importError && (
+          <p className={styles.errorText}>
+            That file couldn&apos;t be imported — make sure it&apos;s a
+            progress file exported from this app.
+          </p>
+        )}
+      </div>
 
       <div className={styles.dangerZone}>
         <h2 className={styles.sectionTitle}>Danger zone</h2>

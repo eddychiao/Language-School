@@ -29,6 +29,18 @@ const hasLocalStorage =
   typeof window !== "undefined" && isLocalStorageAvailable();
 let memoryFallback: StudyData | null = null;
 
+export function normalizeData(parsed: unknown): StudyData | null {
+  if (!parsed || typeof parsed !== "object") return null;
+  const candidate = parsed as StudyData;
+  if (candidate.version !== 1) return null;
+  const fallback = defaultData();
+  return {
+    ...fallback,
+    ...candidate,
+    settings: { ...fallback.settings, ...candidate.settings },
+  };
+}
+
 export function loadData(): StudyData {
   if (!hasLocalStorage) {
     return memoryFallback ?? (memoryFallback = defaultData());
@@ -36,14 +48,7 @@ export function loadData(): StudyData {
   const raw = window.localStorage.getItem(STORAGE_KEY);
   if (!raw) return defaultData();
   try {
-    const parsed = JSON.parse(raw) as StudyData;
-    if (parsed.version !== 1) return defaultData();
-    const fallback = defaultData();
-    return {
-      ...fallback,
-      ...parsed,
-      settings: { ...fallback.settings, ...parsed.settings },
-    };
+    return normalizeData(JSON.parse(raw)) ?? defaultData();
   } catch {
     return defaultData();
   }
