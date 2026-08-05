@@ -54,6 +54,12 @@ export function Stats() {
     return map;
   }, [words, loading, data.memorized]);
 
+  const totalMemorized = useMemo(() => {
+    let sum = 0;
+    for (const count of memorizedByLevel.values()) sum += count;
+    return sum;
+  }, [memorizedByLevel]);
+
   const hardestWords = useMemo(() => {
     return Object.values(data.srs)
       .map((card) => ({
@@ -71,7 +77,7 @@ export function Stats() {
       <h1>Stats</h1>
 
       <div className={styles.summaryRow}>
-        <Stat label="Memorized" value={Object.keys(data.memorized).length} />
+        <Stat label="Memorized" value={loading ? "…" : totalMemorized} />
         <Stat
           label="Overall accuracy"
           value={

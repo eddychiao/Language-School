@@ -102,7 +102,7 @@ export interface StudyData {
   lessonPlans: LessonPlan[];
   stats: {
     sessions: SessionRecord[];
-    daily: Record<string, { reviews: number; right: number }>;
+    daily: Record<string, { reviews: number; right: number; memorized: number }>;
   };
   settings: Settings;
 }

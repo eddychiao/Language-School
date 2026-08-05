@@ -3,7 +3,7 @@ import { useStudyStore } from "../store/useStudyStore";
 import { useLevelsData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
 import { levelLabel } from "../lib/levelLabel";
-import { isDue } from "../srs/scheduler";
+import { todayKey } from "../lib/date";
 import { ProgressBar } from "../components/ProgressBar";
 import styles from "./Home.module.css";
 
@@ -16,28 +16,34 @@ export function Home() {
   const allLevels = indexData.map((entry) => entry.level);
   const { words, loading } = useLevelsData(lang, allLevels);
 
-  const dueCount = Object.values(data.srs).filter((card) => isDue(card)).length;
-  const memorizedCount = Object.keys(data.memorized).length;
+  const memorizedToday = data.stats.daily[todayKey()]?.memorized ?? 0;
   const totalWords = indexData.reduce((sum, entry) => sum + entry.count, 0);
 
+  let memorizedCount = 0;
   const memorizedByLevel = new Map<number, number>();
   if (!loading) {
     for (const word of words) {
       if (data.memorized[word.id]) {
+        memorizedCount++;
         for (const level of word.levels) {
           memorizedByLevel.set(level, (memorizedByLevel.get(level) ?? 0) + 1);
         }
       }
     }
   }
+  const memorizedPct =
+    totalWords === 0 ? 0 : Math.round((memorizedCount / totalWords) * 100);
 
   return (
     <div className={styles.page}>
       <h1>{LANGUAGE_NAMES[lang]}</h1>
 
       <div className={styles.summaryRow}>
-        <SummaryStat label="Due today" value={dueCount} />
-        <SummaryStat label="Memorized" value={`${memorizedCount} / ${totalWords}`} />
+        <SummaryStat label="Memorized today" value={memorizedToday} />
+        <SummaryStat
+          label="Memorized"
+          value={loading ? "…" : `${memorizedCount} / ${totalWords} · ${memorizedPct}%`}
+        />
       </div>
 
       <div className={styles.actions}>

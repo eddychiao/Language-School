@@ -4,6 +4,7 @@ import styles from "./LessonCard.module.css";
 
 interface LessonCardProps {
   lesson: Lesson;
+  total: number;
   memorizedCount: number;
   onStudyFlashcards: () => void;
   onStartTest: () => void;
@@ -11,11 +12,11 @@ interface LessonCardProps {
 
 export function LessonCard({
   lesson,
+  total,
   memorizedCount,
   onStudyFlashcards,
   onStartTest,
 }: LessonCardProps) {
-  const total = lesson.wordIds.length;
   return (
     <div className={styles.card}>
       <div className={styles.header}>

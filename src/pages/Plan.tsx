@@ -26,6 +26,16 @@ export function Plan() {
 
   const { words: pool, loading } = useLevelsData(lang, levels);
 
+  // Lesson plans store word IDs at creation time; if the underlying word data
+  // is ever regenerated those IDs can drift, so counts are computed against
+  // this live pool rather than trusted from the stored lists' lengths - that
+  // keeps the plan list's counts consistent with what a lesson actually shows.
+  const { words: allWords, loading: allWordsLoading } = useLevelsData(lang, allLevels);
+  const validWordIds = useMemo(
+    () => new Set(allWords.map((w) => w.id)),
+    [allWords],
+  );
+
   const plansForLang = data.lessonPlans.filter(
     (p) => (p.language ?? "zh") === lang,
   );
@@ -133,11 +143,17 @@ export function Plan() {
         ) : (
           plansForLang.map((plan) => {
             const isCollapsed = collapsedPlans.has(plan.id);
-            const totalWords = plan.lessons.reduce(
+            const resolvedLessons = plan.lessons.map((lesson) => ({
+              lesson,
+              wordIds: allWordsLoading
+                ? lesson.wordIds
+                : lesson.wordIds.filter((id) => validWordIds.has(id)),
+            }));
+            const totalWords = resolvedLessons.reduce(
               (sum, l) => sum + l.wordIds.length,
               0,
             );
-            const totalMemorized = plan.lessons.reduce(
+            const totalMemorized = resolvedLessons.reduce(
               (sum, l) => sum + l.wordIds.filter((id) => data.memorized[id]).length,
               0,
             );
@@ -182,14 +198,15 @@ export function Plan() {
                 >
                   <div className={styles.collapseInner}>
                     <div className={styles.lessonGrid}>
-                      {plan.lessons.map((lesson) => {
-                        const memorizedCount = lesson.wordIds.filter(
+                      {resolvedLessons.map(({ lesson, wordIds }) => {
+                        const memorizedCount = wordIds.filter(
                           (id) => data.memorized[id],
                         ).length;
                         return (
                           <LessonCard
                             key={lesson.id}
                             lesson={lesson}
+                            total={wordIds.length}
                             memorizedCount={memorizedCount}
                             onStudyFlashcards={() =>
                               navigate(`/${lang}/plan/${plan.id}/lesson/${lesson.id}`)

@@ -15,6 +15,7 @@ import type {
 } from "../types";
 import { defaultData, loadData, normalizeData, saveData } from "./storage";
 import { gradeCard } from "../srs/scheduler";
+import { todayKey } from "../lib/date";
 
 interface StudyStore {
   data: StudyData;
@@ -31,10 +32,6 @@ interface StudyStore {
 }
 
 const StudyStoreContext = createContext<StudyStore | null>(null);
-
-function todayKey(now = new Date()): string {
-  return now.toISOString().slice(0, 10);
-}
 
 export function StudyStoreProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<StudyData>(() => loadData());
@@ -57,10 +54,11 @@ export function StudyStoreProvider({ children }: { children: ReactNode }) {
             : { ...prev.srs, [wordId]: updatedCard };
 
         const day = todayKey();
-        const dayStats = prev.stats.daily[day] ?? { reviews: 0, right: 0 };
+        const dayStats = prev.stats.daily[day] ?? { reviews: 0, right: 0, memorized: 0 };
         const daily = {
           ...prev.stats.daily,
           [day]: {
+            memorized: dayStats.memorized ?? 0,
             reviews: dayStats.reviews + (grade === "skip" ? 0 : 1),
             right: dayStats.right + (grade === "right" ? 1 : 0),
           },
@@ -76,12 +74,24 @@ export function StudyStoreProvider({ children }: { children: ReactNode }) {
     (wordId: string) => {
       commit((prev) => {
         const memorized = { ...prev.memorized };
-        if (memorized[wordId]) {
+        const wasMemorized = Boolean(memorized[wordId]);
+        if (wasMemorized) {
           delete memorized[wordId];
         } else {
           memorized[wordId] = true;
         }
-        return { ...prev, memorized };
+
+        const day = todayKey();
+        const dayStats = prev.stats.daily[day] ?? { reviews: 0, right: 0, memorized: 0 };
+        const daily = {
+          ...prev.stats.daily,
+          [day]: {
+            ...dayStats,
+            memorized: Math.max(0, (dayStats.memorized ?? 0) + (wasMemorized ? -1 : 1)),
+          },
+        };
+
+        return { ...prev, memorized, stats: { ...prev.stats, daily } };
       });
     },
     [commit],
