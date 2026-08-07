@@ -4,6 +4,7 @@ import { useLevelsData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
 import { levelLabel } from "../lib/levelLabel";
 import { headword } from "../lib/wordDisplay";
+import { todayKey } from "../lib/date";
 import { ProgressBar } from "../components/ProgressBar";
 import styles from "./Stats.module.css";
 
@@ -13,7 +14,7 @@ function lastNDays(n: number): string[] {
   for (let i = n - 1; i >= 0; i--) {
     const d = new Date(now);
     d.setDate(d.getDate() - i);
-    days.push(d.toISOString().slice(0, 10));
+    days.push(todayKey(d));
   }
   return days;
 }
@@ -112,12 +113,14 @@ export function Stats() {
         <div className={styles.levels}>
           {indexData.map((entry) => {
             const memorized = memorizedByLevel.get(entry.level) ?? 0;
+            const pct =
+              entry.count === 0 ? 0 : Math.round((memorized / entry.count) * 100);
             return (
               <div key={entry.level} className={styles.levelRow}>
                 <div className={styles.levelHeader}>
                   <span>Level {levelLabel(lang, entry.level)}</span>
                   <span className={styles.levelCount}>
-                    {loading ? "…" : `${memorized} / ${entry.count}`}
+                    {loading ? "…" : `${memorized} / ${entry.count} · ${pct}%`}
                   </span>
                 </div>
                 <ProgressBar

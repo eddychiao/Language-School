@@ -60,6 +60,8 @@ export function Home() {
         <div className={styles.levels}>
           {indexData.map((entry) => {
             const memorized = memorizedByLevel.get(entry.level) ?? 0;
+            const pct =
+              entry.count === 0 ? 0 : Math.round((memorized / entry.count) * 100);
             return (
               <Link
                 key={entry.level}
@@ -69,7 +71,7 @@ export function Home() {
                 <div className={styles.levelHeader}>
                   <span>Level {levelLabel(lang, entry.level)}</span>
                   <span className={styles.levelCount}>
-                    {loading ? "…" : `${memorized} / ${entry.count}`}
+                    {loading ? "…" : `${memorized} / ${entry.count} · ${pct}%`}
                   </span>
                 </div>
                 <ProgressBar
