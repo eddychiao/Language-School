@@ -3,6 +3,7 @@ import { useStudyStore } from "../store/useStudyStore";
 import { useLevelsData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
 import { levelLabel } from "../lib/levelLabel";
+import { levelName } from "../lib/levelName";
 import { headword } from "../lib/wordDisplay";
 import { todayKey } from "../lib/date";
 import { ProgressBar } from "../components/ProgressBar";
@@ -118,7 +119,12 @@ export function Stats() {
             return (
               <div key={entry.level} className={styles.levelRow}>
                 <div className={styles.levelHeader}>
-                  <span>Level {levelLabel(lang, entry.level)}</span>
+                  <span>
+                    {levelName(entry.level)}
+                    <span className={styles.levelBadge}>
+                      Level {levelLabel(lang, entry.level)}
+                    </span>
+                  </span>
                   <span className={styles.levelCount}>
                     {loading ? "…" : `${memorized} / ${entry.count} · ${pct}%`}
                   </span>

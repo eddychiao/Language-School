@@ -6,6 +6,7 @@ import { useLang } from "../lib/useLang";
 import { levelLabel } from "../lib/levelLabel";
 import { LevelChips } from "../components/LevelChips";
 import { LessonCard } from "../components/LessonCard";
+import { Select } from "../components/Select";
 import { buildLessonPlan } from "../lib/lessonPlanner";
 import type { LessonPlan } from "../types";
 import styles from "./Plan.module.css";
@@ -117,15 +118,11 @@ export function Plan() {
         </div>
 
         <h2 className={styles.sectionTitle}>Order</h2>
-        <select
-          value={order}
-          onChange={(e) => setOrder(e.target.value as LessonPlan["order"])}
-          className={styles.select}
-        >
+        <Select value={order} onChange={(e) => setOrder(e.target.value as LessonPlan["order"])}>
           <option value="frequency">Frequency (common first)</option>
           <option value="alphabetical">Alphabetical</option>
           <option value="random">Random</option>
-        </select>
+        </Select>
 
         <button
           type="button"

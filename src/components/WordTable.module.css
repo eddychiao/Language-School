@@ -61,7 +61,6 @@
 }
 
 .colMeaning:hover {
-  color: var(--color-text);
   text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-color: var(--color-text-muted);

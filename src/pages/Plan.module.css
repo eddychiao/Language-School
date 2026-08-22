@@ -43,15 +43,6 @@
   color: var(--color-text);
 }
 
-.select {
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-size: 0.9rem;
-}
-
 .createButton {
   align-self: flex-start;
   margin-top: var(--space-2);

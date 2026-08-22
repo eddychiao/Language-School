@@ -5,8 +5,17 @@ interface ProgressBarProps {
   label?: string;
 }
 
+/** Progress fill color interpolates from red (0%) to green (100%) so
+ * completion is visible at a glance, and shifts gradually as the underlying
+ * count changes rather than jumping between fixed states. */
+function progressColor(clamped: number): string {
+  const hue = clamped * 120; // 0 = red, 120 = green
+  return `hsl(${hue.toFixed(0)}, 65%, 45%)`;
+}
+
 export function ProgressBar({ value, label }: ProgressBarProps) {
-  const pct = Math.round(Math.max(0, Math.min(1, value)) * 100);
+  const clamped = Math.max(0, Math.min(1, value));
+  const pct = Math.round(clamped * 100);
   return (
     <div className={styles.wrapper}>
       {label && <div className={styles.label}>{label}</div>}
@@ -17,7 +26,10 @@ export function ProgressBar({ value, label }: ProgressBarProps) {
         aria-valuemin={0}
         aria-valuemax={100}
       >
-        <div className={styles.fill} style={{ width: `${pct}%` }} />
+        <div
+          className={styles.fill}
+          style={{ width: `${pct}%`, background: progressColor(clamped) }}
+        />
       </div>
     </div>
   );

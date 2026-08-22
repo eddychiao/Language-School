@@ -86,23 +86,47 @@ function toWord(entry: RawEntry, levels: number[], seen: Map<string, number>): Z
   };
 }
 
+/** HSK 3.0's official band 7 is actually "7-9", a single combined tier with
+ * no further per-word split in the source data. To give learners three
+ * proper levels instead of one giant one, the band is divided into thirds
+ * by frequency rank (most-common third -> 7, middle -> 8, rarest -> 9). */
+function splitCombinedBand(
+  raw: RawEntry[],
+): Map<RawEntry, number> {
+  const combined = raw
+    .filter((entry) => entry.forms?.length && parseNewLevels(entry.level).includes(7))
+    .sort((a, b) => a.frequency - b.frequency);
+
+  const third = Math.ceil(combined.length / 3);
+  const subLevel = new Map<RawEntry, number>();
+  combined.forEach((entry, i) => {
+    subLevel.set(entry, 7 + Math.min(2, Math.floor(i / third)));
+  });
+  return subLevel;
+}
+
 function main() {
   const raw: RawEntry[] = JSON.parse(readFileSync(SOURCE_PATH, "utf-8"));
+  const combinedBandSubLevel = splitCombinedBand(raw);
 
   const byLevel = new Map<number, ZhWord[]>();
-  for (let level = 1; level <= 7; level++) byLevel.set(level, []);
+  for (let level = 1; level <= 9; level++) byLevel.set(level, []);
 
   const idSeen = new Map<string, number>();
   let hsk3Count = 0;
 
   for (const entry of raw) {
     if (!entry.forms?.length) continue;
-    const newLevels = parseNewLevels(entry.level);
-    if (newLevels.length === 0) continue;
+    const rawLevels = parseNewLevels(entry.level);
+    if (rawLevels.length === 0) continue;
+
+    const levels = rawLevels.map((level) =>
+      level === 7 ? combinedBandSubLevel.get(entry)! : level,
+    );
 
     hsk3Count++;
-    for (const level of newLevels) {
-      const word = toWord(entry, newLevels, idSeen);
+    for (const level of levels) {
+      const word = toWord(entry, levels, idSeen);
       byLevel.get(level)!.push(word);
     }
   }

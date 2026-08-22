@@ -3,8 +3,11 @@ import { useStudyStore } from "../store/useStudyStore";
 import { useLevelsData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
 import { levelLabel } from "../lib/levelLabel";
+import { levelName } from "../lib/levelName";
+import { headword } from "../lib/wordDisplay";
 import { todayKey } from "../lib/date";
 import { ProgressBar } from "../components/ProgressBar";
+import { InfoTooltip } from "../components/InfoTooltip";
 import styles from "./Home.module.css";
 
 const LANGUAGE_NAMES = { zh: "Chinese", es: "Spanish" } as const;
@@ -21,6 +24,7 @@ export function Home() {
 
   let memorizedCount = 0;
   const memorizedByLevel = new Map<number, number>();
+  const wordsByLevel = new Map<number, string[]>();
   if (!loading) {
     for (const word of words) {
       if (data.memorized[word.id]) {
@@ -28,6 +32,11 @@ export function Home() {
         for (const level of word.levels) {
           memorizedByLevel.set(level, (memorizedByLevel.get(level) ?? 0) + 1);
         }
+      }
+      for (const level of word.levels) {
+        const list = wordsByLevel.get(level);
+        if (list) list.push(headword(word));
+        else wordsByLevel.set(level, [headword(word)]);
       }
     }
   }
@@ -53,6 +62,15 @@ export function Home() {
         <Link to={`/${lang}/words/1`} className={styles.secondaryAction}>
           Browse words
         </Link>
+        <Link to={`/${lang}/plan`} className={styles.secondaryAction}>
+          Lesson plans
+        </Link>
+        <Link to={`/${lang}/reading`} className={styles.secondaryAction}>
+          Reading practice
+        </Link>
+        <Link to={`/${lang}/stats`} className={styles.secondaryAction}>
+          Stats
+        </Link>
       </div>
 
       <section>
@@ -63,21 +81,28 @@ export function Home() {
             const pct =
               entry.count === 0 ? 0 : Math.round((memorized / entry.count) * 100);
             return (
-              <Link
-                key={entry.level}
-                to={`/${lang}/words/${entry.level}`}
-                className={styles.levelRow}
-              >
-                <div className={styles.levelHeader}>
-                  <span>Level {levelLabel(lang, entry.level)}</span>
-                  <span className={styles.levelCount}>
-                    {loading ? "…" : `${memorized} / ${entry.count} · ${pct}%`}
-                  </span>
-                </div>
-                <ProgressBar
-                  value={loading || entry.count === 0 ? 0 : memorized / entry.count}
+              <div key={entry.level} className={styles.levelRow}>
+                <Link to={`/${lang}/words/${entry.level}`} className={styles.levelLink}>
+                  <div className={styles.levelHeader}>
+                    <span>
+                      {levelName(entry.level)}
+                      <span className={styles.levelBadge}>
+                        Level {levelLabel(lang, entry.level)}
+                      </span>
+                    </span>
+                    <span className={styles.levelCount}>
+                      {loading ? "…" : `${memorized} / ${entry.count} · ${pct}%`}
+                    </span>
+                  </div>
+                  <ProgressBar
+                    value={loading || entry.count === 0 ? 0 : memorized / entry.count}
+                  />
+                </Link>
+                <InfoTooltip
+                  label={`Example words for level ${levelLabel(lang, entry.level)}`}
+                  words={wordsByLevel.get(entry.level) ?? []}
                 />
-              </Link>
+              </div>
             );
           })}
         </div>

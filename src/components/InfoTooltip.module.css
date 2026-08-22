@@ -1,0 +1,74 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: help;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.trigger:hover,
+.wrapper:focus-within .trigger {
+  background: var(--color-accent-soft);
+}
+
+/* Positioned via inline `top`/`bottom`/`left`/`right` (computed from the
+   trigger's screen coords, flipping/clamping to stay on-screen) and
+   portaled to `document.body`, so it always renders above every other
+   element on the page regardless of any ancestor's stacking context. */
+.bubble {
+  position: fixed;
+  z-index: 1000;
+  min-width: 260px;
+  max-width: min(340px, calc(100vw - 2 * var(--space-4)));
+  max-height: calc(100vh - 2 * var(--space-4));
+  overflow-y: auto;
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+  animation: infoTooltipIn 0.15s ease;
+}
+
+@keyframes infoTooltipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bubbleTitle {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.bubbleWords {
+  display: block;
+  font-size: 1.15rem;
+  color: var(--color-text);
+  line-height: 1.6;
+}

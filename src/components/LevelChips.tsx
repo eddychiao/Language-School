@@ -1,5 +1,6 @@
 import type { Language } from "../types";
 import { levelLabel } from "../lib/levelLabel";
+import { levelName } from "../lib/levelName";
 import styles from "./LevelChips.module.css";
 
 interface LevelChipsProps {
@@ -41,6 +42,7 @@ export function LevelChips({
             type="button"
             className={`${styles.chip} ${isSelected ? styles.selected : ""}`}
             aria-pressed={isSelected}
+            title={levelName(level)}
             onClick={() => toggle(level)}
           >
             <span>{levelLabel(lang, level)}</span>

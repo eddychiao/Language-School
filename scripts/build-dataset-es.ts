@@ -18,10 +18,11 @@ interface SourceEntry {
   rank: number;
 }
 
-// HSK's own level sizes (1..7, 7 == "7-9"), used as the proportional
-// template for bucketing the frequency-ranked Spanish list into 7 tiers of
-// similar shape (small early levels, large tail) instead of even splits.
-const HSK_LEVEL_COUNTS = [506, 750, 953, 972, 1059, 1123, 5606];
+// HSK's own level sizes (9 tiers, after splitting its combined "7-9" band
+// into thirds), used as the proportional template for bucketing the
+// frequency-ranked Spanish list into 9 tiers of similar shape (small early
+// levels, large tail) instead of even splits.
+const HSK_LEVEL_COUNTS = [506, 750, 953, 972, 1059, 1123, 1869, 1869, 1868];
 
 function levelBoundaries(total: number): number[] {
   const hskTotal = HSK_LEVEL_COUNTS.reduce((a, b) => a + b, 0);
@@ -65,7 +66,7 @@ function main() {
   const boundaries = levelBoundaries(source.length);
 
   const byLevel = new Map<number, EsWord[]>();
-  for (let level = 1; level <= 7; level++) byLevel.set(level, []);
+  for (let level = 1; level <= 9; level++) byLevel.set(level, []);
 
   const idSeen = new Map<string, number>();
   for (const entry of source) {

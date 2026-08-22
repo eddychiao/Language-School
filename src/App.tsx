@@ -11,6 +11,7 @@ import { Plan } from "./pages/Plan";
 import { LessonCards } from "./pages/LessonCards";
 import { Stats } from "./pages/Stats";
 import { Settings } from "./pages/Settings";
+import { Reading } from "./pages/Reading";
 
 function ThemeSync() {
   const { data } = useStudyStore();
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="study/session" element={<StudySession />} />
           <Route path="plan" element={<Plan />} />
           <Route path="plan/:planId/lesson/:lessonId" element={<LessonCards />} />
+          <Route path="reading" element={<Reading />} />
           <Route path="stats" element={<Stats />} />
           <Route path="settings" element={<Settings />} />
           <Route path="*" element={<Navigate to="." replace />} />

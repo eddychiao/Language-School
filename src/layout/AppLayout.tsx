@@ -1,8 +1,10 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   BarChartIcon,
   BookIcon,
   CalendarIcon,
+  FileTextIcon,
   HomeIcon,
   LayersIcon,
   SettingsIcon,
@@ -17,11 +19,19 @@ const LANGUAGES: { value: Language; label: string }[] = [
   { value: "es", label: "Español" },
 ];
 
-const TAB_DEFS = [
+const TAB_DEFS: {
+  path: string;
+  label: string;
+  Icon: (props: { size?: number }) => JSX.Element;
+  exact?: boolean;
+  matchPrefix?: string;
+  zhOnly?: boolean;
+}[] = [
   { path: "", label: "Home", exact: true, Icon: HomeIcon },
   { path: "words/1", label: "Words", matchPrefix: "words", Icon: BookIcon },
   { path: "study", label: "Study", matchPrefix: "study", Icon: LayersIcon },
   { path: "plan", label: "Plan", matchPrefix: "plan", Icon: CalendarIcon },
+  { path: "reading", label: "Reading", matchPrefix: "reading", Icon: FileTextIcon },
   { path: "stats", label: "Stats", matchPrefix: "stats", Icon: BarChartIcon },
 ];
 
@@ -32,7 +42,7 @@ export function AppLayout() {
   const { updateSettings } = useStudyStore();
 
   const homePath = `/${lang}`;
-  const tabs = TAB_DEFS.map((tab) => ({
+  const tabs = TAB_DEFS.filter((tab) => !tab.zhOnly || lang === "zh").map((tab) => ({
     ...tab,
     to: tab.path ? `${homePath}/${tab.path}` : homePath,
     matchPath: tab.matchPrefix ? `${homePath}/${tab.matchPrefix}` : homePath,
@@ -47,11 +57,6 @@ export function AppLayout() {
     navigate(`/${next}`);
   };
 
-  const activeClass: Record<Language, string> = {
-    zh: styles.langOptionActiveZh,
-    es: styles.langOptionActiveEs,
-  };
-
   const languageSwitcher = (
     <div className={styles.langSwitch} role="group" aria-label="Language">
       {LANGUAGES.map((l) => (
@@ -59,7 +64,7 @@ export function AppLayout() {
           key={l.value}
           type="button"
           className={`${styles.langOption} ${
-            l.value === lang ? activeClass[l.value] : ""
+            l.value === lang ? styles.langOptionActive : ""
           }`}
           aria-pressed={l.value === lang}
           onClick={() => switchLanguage(l.value)}
@@ -71,7 +76,7 @@ export function AppLayout() {
   );
 
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-lang={lang}>
       {/* Mobile-only top bar: title + settings icon. Hidden on desktop, where
           the sidebar carries both. */}
       <header className={styles.header}>
@@ -103,7 +108,7 @@ export function AppLayout() {
                   isTabActive(tab) ? styles.sidebarLinkActive : ""
                 }`}
               >
-                <tab.Icon size={18} />
+                <tab.Icon size={22} />
                 {tab.label}
               </Link>
             ))}
@@ -114,15 +119,23 @@ export function AppLayout() {
               pathname.startsWith(`${homePath}/settings`) ? styles.sidebarLinkActive : ""
             }`}
           >
-            <SettingsIcon size={18} />
+            <SettingsIcon size={22} />
             Settings
           </Link>
         </nav>
 
         <main className={styles.main}>
-          <div key={pathname} className={styles.pageTransition}>
-            <Outlet />
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={pathname}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
 

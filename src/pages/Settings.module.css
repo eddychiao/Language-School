@@ -10,6 +10,7 @@
   justify-content: space-between;
   padding: var(--space-4);
   border: 1px solid var(--color-border);
+  background: var(--color-surface);
   border-radius: var(--radius);
   font-size: 0.95rem;
 }
@@ -32,10 +33,6 @@
   cursor: pointer;
 }
 
-.segment:hover {
-  color: var(--color-text);
-}
-
 .segmentActive {
   background: var(--color-accent);
   color: var(--color-accent-contrast);
@@ -47,6 +44,7 @@
 
 .section {
   border: 1px solid var(--color-border);
+  background: var(--color-surface);
   border-radius: var(--radius);
   padding: var(--space-4);
   display: flex;

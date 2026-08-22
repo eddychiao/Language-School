@@ -1,23 +1,29 @@
 :root {
-  /* Neutral base */
-  --color-bg: #ffffff;
-  --color-surface: #f6f7f6;
-  --color-border: #e3e5e3;
-  --color-text: #23261f;
-  --color-text-muted: #6b6f68;
+  /* Neutral base - a soft tinted off-white instead of stark white, so cards
+     (--color-surface, brighter) have something to pop against. */
+  --color-bg: #eef0f6;
+  --color-surface: #ffffff;
+  --color-surface-2: #e6e9f2;
+  --color-border: #dbdfe9;
+  --color-text: #1d2029;
+  --color-text-muted: #656b7d;
 
-  /* Single accent */
-  --color-accent: #1b6b4f;
-  --color-accent-hover: #155a41;
+  /* Accent - overridden per language below ([data-lang="zh"|"es"]). Hover
+     and soft variants are derived formulas so they always follow whichever
+     --color-accent is active, instead of needing separate copies. */
+  --color-accent: #235789;
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 82%, black);
   --color-accent-contrast: #ffffff;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 14%, transparent);
 
   /* Semantic, used sparingly */
-  --color-right: #1b8a5a;
+  --color-right: #2e8b47;
   --color-wrong: #c0392b;
   --color-skip: #8a8f87;
 
-  --radius: 10px;
-  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -33,6 +39,7 @@
     "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Heiti SC", sans-serif;
 
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.08);
 
   color-scheme: light;
 }
@@ -43,42 +50,52 @@
    in sync - they intentionally duplicate the same values. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg: #161815;
-    --color-surface: #1e211d;
-    --color-border: #30332e;
-    --color-text: #eceeea;
-    --color-text-muted: #9a9e96;
+    --color-bg: #161925;
+    --color-surface: #1e2233;
+    --color-surface-2: #262b40;
+    --color-border: #313754;
+    --color-text: #edeef2;
+    --color-text-muted: #9aa1b5;
 
-    --color-accent: #3fae82;
-    --color-accent-hover: #59c297;
-    --color-accent-contrast: #0c0f0b;
+    --color-accent-hover: color-mix(in srgb, var(--color-accent) 80%, white);
 
-    --color-right: #3fae82;
-    --color-wrong: #e0685a;
-    --color-skip: #7b7f77;
+    --color-right: #45b45f;
+    --color-wrong: #e2564a;
+    --color-skip: #7b8090;
 
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-2: 0 12px 32px rgba(0, 0, 0, 0.45);
 
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --color-bg: #161815;
-  --color-surface: #1e211d;
-  --color-border: #30332e;
-  --color-text: #eceeea;
-  --color-text-muted: #9a9e96;
+  --color-bg: #161925;
+  --color-surface: #1e2233;
+  --color-surface-2: #262b40;
+  --color-border: #313754;
+  --color-text: #edeef2;
+  --color-text-muted: #9aa1b5;
 
-  --color-accent: #3fae82;
-  --color-accent-hover: #59c297;
-  --color-accent-contrast: #0c0f0b;
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 80%, white);
 
-  --color-right: #3fae82;
-  --color-wrong: #e0685a;
-  --color-skip: #7b7f77;
+  --color-right: #45b45f;
+  --color-wrong: #e2564a;
+  --color-skip: #7b8090;
 
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 12px 32px rgba(0, 0, 0, 0.45);
 
   color-scheme: dark;
+}
+
+/* Per-language accent, applied via `data-lang` on the app shell so every
+   page under the current language picks up its own color automatically. */
+[data-lang="zh"] {
+  --color-accent: #235789;
+}
+
+[data-lang="es"] {
+  --color-accent: #c1292e;
 }

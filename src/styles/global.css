@@ -12,7 +12,13 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background:
+    radial-gradient(
+      1200px 600px at 15% -10%,
+      var(--color-accent-soft),
+      transparent 60%
+    ),
+    var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
@@ -33,13 +39,13 @@ p {
   color: var(--color-text-muted);
 }
 
+/* Deliberately no color change on hover: most links here are full nav/card
+   blocks (LevelChips rows, sidebar links, LessonCards, ...) with their own
+   border/background/shadow hover treatment already; recoloring the text on
+   top of that made it harder to read, especially in dark mode. */
 a {
   color: var(--color-accent);
   text-decoration: none;
-}
-
-a:hover {
-  color: var(--color-accent-hover);
 }
 
 button {
@@ -48,11 +54,41 @@ button {
     transform 0.12s ease,
     background-color 0.15s ease,
     border-color 0.15s ease,
-    color 0.15s ease;
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 button:active:not(:disabled) {
   transform: scale(0.96);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-text);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
 
 .hanzi {

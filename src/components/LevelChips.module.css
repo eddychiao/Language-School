@@ -28,9 +28,10 @@
 
 .selected {
   background: var(--color-accent);
-  border-color: var(--color-accent);
+  border-color: transparent;
   color: var(--color-accent-contrast);
   transform: scale(1.06);
+  box-shadow: var(--shadow-1);
 }
 
 .count {

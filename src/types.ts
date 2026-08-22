@@ -10,7 +10,7 @@ interface WordBase {
   id: string;
   meanings: string[];
   pos: string[];
-  levels: number[]; // 1..7, per-language tiers (zh: HSK, 7 == HSK 7-9; es: invented frequency bands)
+  levels: number[]; // 1..9, per-language tiers (zh: HSK bands, with 7-9 split into thirds by frequency; es: invented frequency bands)
   frequency: number; // rank within the language's word list, lower = more common
 }
 

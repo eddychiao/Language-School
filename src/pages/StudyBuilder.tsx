@@ -5,6 +5,7 @@ import { useLevelsData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
 import { LevelChips } from "../components/LevelChips";
 import { Toggle } from "../components/Toggle";
+import { Select } from "../components/Select";
 import {
   buildSession,
   matchingCandidates,
@@ -119,15 +120,11 @@ export function StudyBuilder() {
 
       <section>
         <h2 className={styles.sectionTitle}>Order</h2>
-        <select
-          value={order}
-          onChange={(e) => setOrder(e.target.value as SessionConfig["order"])}
-          className={styles.select}
-        >
+        <Select value={order} onChange={(e) => setOrder(e.target.value as SessionConfig["order"])}>
           <option value="due">Due first</option>
           <option value="frequency">Frequency (common first)</option>
           <option value="random">Random</option>
-        </select>
+        </Select>
       </section>
 
       <p className={styles.preview}>

@@ -26,6 +26,8 @@ const ZH_LEVEL_LOADERS: Record<number, () => Promise<WordsModule>> = {
   5: () => import("../data/zh/levels/5.json"),
   6: () => import("../data/zh/levels/6.json"),
   7: () => import("../data/zh/levels/7.json"),
+  8: () => import("../data/zh/levels/8.json"),
+  9: () => import("../data/zh/levels/9.json"),
 };
 
 const ES_LEVEL_LOADERS: Record<number, () => Promise<WordsModule>> = {
@@ -36,6 +38,8 @@ const ES_LEVEL_LOADERS: Record<number, () => Promise<WordsModule>> = {
   5: () => import("../data/es/levels/5.json"),
   6: () => import("../data/es/levels/6.json"),
   7: () => import("../data/es/levels/7.json"),
+  8: () => import("../data/es/levels/8.json"),
+  9: () => import("../data/es/levels/9.json"),
 };
 
 function loaderFor(lang: Language) {
