@@ -25,8 +25,8 @@
   background: var(--color-accent-soft);
 }
 
-/* Positioned via inline `top`/`bottom`/`left`/`right` (computed from the
-   trigger's screen coords, flipping/clamping to stay on-screen) and
+/* Positioned via inline `top`/`left` (computed from the trigger's screen
+   coords and clamped to the viewport so it never runs off-screen) and
    portaled to `document.body`, so it always renders above every other
    element on the page regardless of any ancestor's stacking context. */
 .bubble {

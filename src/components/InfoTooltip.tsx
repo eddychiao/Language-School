@@ -5,11 +5,14 @@ import { InfoIcon } from "./Icons";
 import styles from "./InfoTooltip.module.css";
 
 const SAMPLE_SIZE = 5;
-const MARGIN = 8;
-// Conservative estimates for the bubble's rendered size, used to decide
-// whether it needs to flip above the trigger or clamp to the opposite edge
-// instead of running off-screen. Actual content is smaller in most cases,
-// so this errs toward more room than necessary rather than less.
+// Matches --space-4, the margin the CSS max-width/max-height clamps also
+// use, so the JS-computed position and the CSS size clamp agree on how
+// much edge padding to leave.
+const MARGIN = 16;
+// Conservative estimates for the bubble's rendered size, used only to
+// clamp its position to the viewport before it has actually rendered.
+// Actual content is usually smaller, so this errs toward more room than
+// necessary rather than less.
 const ESTIMATED_HEIGHT = 180;
 const ESTIMATED_WIDTH = 340;
 
@@ -21,18 +24,18 @@ interface InfoTooltipProps {
 }
 
 interface Coords {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+  top: number;
+  left: number;
 }
 
 /** A hover/focus-triggered info bubble. Rendered through a portal into
  * `document.body` and positioned via the trigger's screen coordinates -
  * this keeps it out of any ancestor's stacking context (e.g. a hovered
  * sibling card applying `transform`), which otherwise could let a later
- * element's own icon paint on top of an open bubble. Placement flips
- * above/below and clamps left/right so it never runs off the viewport. */
+ * element's own icon paint on top of an open bubble. Position is always
+ * clamped to [MARGIN, viewport - size - MARGIN] on both axes, so the
+ * bubble stays fully on-screen no matter where the trigger sits or how
+ * small the window is. */
 export function InfoTooltip({ label, words }: InfoTooltipProps) {
   const [sample, setSample] = useState<string[]>(() => shuffle(words).slice(0, SAMPLE_SIZE));
   const [coords, setCoords] = useState<Coords | null>(null);
@@ -43,17 +46,18 @@ export function InfoTooltip({ label, words }: InfoTooltipProps) {
     const rect = triggerRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    const spaceBelow = window.innerHeight - rect.bottom;
-    const openUpward = spaceBelow < ESTIMATED_HEIGHT + MARGIN && rect.top > ESTIMATED_HEIGHT;
-    const spaceOnRight = window.innerWidth - rect.right;
-    const alignLeft = spaceOnRight < ESTIMATED_WIDTH - rect.width && rect.left > ESTIMATED_WIDTH;
+    // Clamp the estimated size itself first, so a window smaller than the
+    // estimate still yields a sane upper bound for the position clamp
+    // below (the bubble's own max-width/max-height shrink it to match).
+    const width = Math.min(ESTIMATED_WIDTH, window.innerWidth - 2 * MARGIN);
+    const height = Math.min(ESTIMATED_HEIGHT, window.innerHeight - 2 * MARGIN);
 
-    setCoords({
-      top: openUpward ? undefined : rect.bottom + MARGIN,
-      bottom: openUpward ? window.innerHeight - rect.top + MARGIN : undefined,
-      left: alignLeft ? rect.left : undefined,
-      right: alignLeft ? undefined : window.innerWidth - rect.right,
-    });
+    const fitsBelow = rect.bottom + MARGIN + height <= window.innerHeight;
+    const top = fitsBelow ? rect.bottom + MARGIN : rect.top - MARGIN - height;
+    const clampedTop = Math.max(MARGIN, Math.min(top, window.innerHeight - MARGIN - height));
+    const clampedLeft = Math.max(MARGIN, Math.min(rect.left, window.innerWidth - MARGIN - width));
+
+    setCoords({ top: clampedTop, left: clampedLeft });
   };
   const hide = () => setCoords(null);
 
