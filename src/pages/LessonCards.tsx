@@ -29,14 +29,21 @@ export function LessonCards() {
   );
 
   const [reversed, setReversed] = useState(false);
-  const [words, setWords] = useState<Word[]>([]);
+  const [hideMemorized, setHideMemorized] = useState(false);
+  const [orderedWords, setOrderedWords] = useState<Word[]>([]);
 
   useEffect(() => {
-    setWords(resolvedWords);
+    setOrderedWords(resolvedWords);
   }, [resolvedWords]);
 
+  const filtered = useMemo(() => {
+    return hideMemorized
+      ? orderedWords.filter((w) => !data.memorized[w.id])
+      : orderedWords;
+  }, [orderedWords, hideMemorized, data.memorized]);
+
   const { index, direction, goPrev, goNext, resetIndex } = useFlashcardNav(
-    words.length,
+    filtered.length,
   );
 
   const memorizedCount = useMemo(
@@ -45,7 +52,7 @@ export function LessonCards() {
   );
 
   const shuffleDeck = () => {
-    setWords((prev) => shuffle(prev));
+    setOrderedWords((prev) => shuffle(prev));
     resetIndex();
   };
 
@@ -57,7 +64,7 @@ export function LessonCards() {
     );
   }
 
-  const current = words[index];
+  const current = filtered[index];
 
   return (
     <div className={styles.page}>
@@ -91,6 +98,14 @@ export function LessonCards() {
           onChange={setReversed}
           label="Reversed (meaning first)"
         />
+        <Toggle
+          checked={hideMemorized}
+          onChange={(checked) => {
+            setHideMemorized(checked);
+            resetIndex();
+          }}
+          label="Hide memorized"
+        />
         {lang === "zh" && (
           <Toggle
             checked={data.settings.showPinyin}
@@ -100,13 +115,15 @@ export function LessonCards() {
         )}
       </div>
 
-      {loading || !current ? (
+      {loading ? (
         <p>Loading…</p>
+      ) : !current ? (
+        <p>No words match.</p>
       ) : (
         <FlashcardStage
           word={current}
           index={index}
-          total={words.length}
+          total={filtered.length}
           direction={direction}
           showTraditional={data.settings.showTraditional}
           showPinyin={data.settings.showPinyin}

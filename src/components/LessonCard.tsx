@@ -1,5 +1,6 @@
 import type { Lesson } from "../types";
 import { ProgressBar } from "./ProgressBar";
+import { CheckIcon } from "./Icons";
 import styles from "./LessonCard.module.css";
 
 interface LessonCardProps {
@@ -17,13 +18,22 @@ export function LessonCard({
   onStudyFlashcards,
   onStartTest,
 }: LessonCardProps) {
+  const complete = total > 0 && memorizedCount === total;
+
   return (
     <div className={styles.card}>
       <div className={styles.header}>
         <h3 className={styles.title}>{lesson.label}</h3>
-        <span className={styles.count}>
-          {memorizedCount} / {total} memorized
-        </span>
+        {complete ? (
+          <span className={styles.complete}>
+            <CheckIcon size={14} />
+            Done
+          </span>
+        ) : (
+          <span className={styles.count}>
+            {memorizedCount} / {total} memorized
+          </span>
+        )}
       </div>
       <ProgressBar value={total === 0 ? 0 : memorizedCount / total} />
       <div className={styles.actions}>
