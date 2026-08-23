@@ -50,6 +50,11 @@ export function WordsList() {
     return words.filter((w) => data.memorized[w.id]).length;
   }, [words, data.memorized]);
 
+  const memorizedPct =
+    !words || words.length === 0
+      ? 0
+      : Math.round((memorizedInLevel / words.length) * 100);
+
   return (
     <div className={styles.page}>
       <div className={styles.headerRow}>
@@ -74,7 +79,7 @@ export function WordsList() {
 
       {words && (
         <ProgressBar
-          label={`${memorizedInLevel} / ${words.length} memorized`}
+          label={`${memorizedInLevel} / ${words.length} · ${memorizedPct}% memorized`}
           value={words.length === 0 ? 0 : memorizedInLevel / words.length}
         />
       )}

@@ -51,7 +51,7 @@ export function buildLessonPlan({
     const slice = ordered.slice(i, i + size);
     lessons.push({
       id: randomId("lesson"),
-      label: `Lesson ${lessonNum} (words ${i + 1}-${i + slice.length})`,
+      label: `Lesson ${lessonNum}`,
       wordIds: slice.map((w) => w.id),
     });
   }
