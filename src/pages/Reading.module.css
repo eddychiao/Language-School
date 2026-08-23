@@ -62,11 +62,13 @@
 .cardHeader {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-1) var(--space-3);
 }
 
 .cardTitle {
+  min-width: 0;
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--color-text);

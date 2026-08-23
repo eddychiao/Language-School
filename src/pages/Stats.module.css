@@ -86,13 +86,18 @@
 
 .levelHeader {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
   margin-bottom: var(--space-2);
   font-size: 0.9rem;
 }
 
 .levelCount {
+  margin-left: auto;
   color: var(--color-text-muted);
+  white-space: nowrap;
 }
 
 .levelBadge {
