@@ -90,6 +90,7 @@ export interface LessonPlan {
 export interface Settings {
   showTraditional: boolean;
   showPinyin: boolean;
+  hideMemorized: boolean;
   theme: "system" | "light" | "dark";
   /** Last-viewed language, used to pick where "/" redirects to. */
   language: Language;

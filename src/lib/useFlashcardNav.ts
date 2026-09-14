@@ -19,6 +19,7 @@ export function useFlashcardNav(total: number) {
     setIndex((i) => Math.min(total - 1, i + 1));
   };
   const resetIndex = () => setIndex(0);
+  const goToIndex = (i: number) => setIndex(Math.max(0, Math.min(total - 1, i)));
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -32,5 +33,5 @@ export function useFlashcardNav(total: number) {
 
   const clampedIndex = Math.min(index, Math.max(0, total - 1));
 
-  return { index: clampedIndex, direction, goPrev, goNext, resetIndex };
+  return { index: clampedIndex, direction, goPrev, goNext, resetIndex, goToIndex };
 }

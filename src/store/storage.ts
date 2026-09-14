@@ -10,7 +10,13 @@ export function defaultData(): StudyData {
     memorized: {},
     lessonPlans: [],
     stats: { sessions: [], daily: {} },
-    settings: { showTraditional: false, showPinyin: true, theme: "system", language: "zh" },
+    settings: {
+      showTraditional: false,
+      showPinyin: true,
+      hideMemorized: false,
+      theme: "system",
+      language: "zh",
+    },
   };
 }
 

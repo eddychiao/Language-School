@@ -35,6 +35,14 @@ const TAB_DEFS: {
   { path: "stats", label: "Stats", matchPrefix: "stats", Icon: BarChartIcon },
 ];
 
+/** Drops the numeric level segment from words routes so switching between
+ * levels (e.g. /zh/words/3 -> /zh/words/7) doesn't remount the page and
+ * replay the enter transition; navigating between distinct sections still
+ * gets a fresh key. */
+function transitionKey(pathname: string): string {
+  return pathname.replace(/\/words\/\d+/, "/words");
+}
+
 export function AppLayout() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -127,7 +135,7 @@ export function AppLayout() {
         <main className={styles.main}>
           <AnimatePresence mode="wait">
             <motion.div
-              key={pathname}
+              key={transitionKey(pathname)}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}

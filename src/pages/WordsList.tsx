@@ -16,13 +16,17 @@ export function WordsList() {
   const { level: levelParam } = useParams();
   const navigate = useNavigate();
   const level = Number(levelParam) || 1;
-  const { data, toggleMemorized } = useStudyStore();
+  const { data, toggleMemorized, updateSettings } = useStudyStore();
   const { words, loading } = useLevelData(lang, level);
   const [query, setQuery] = useState("");
-  const [hideMemorized, setHideMemorized] = useState(false);
+  const hideMemorized = data.settings.hideMemorized;
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
   const allLevels = useMemo(() => levelIndex(lang).map((entry) => entry.level), [lang]);
+
+  const openFlashcard = (id: string) => {
+    navigate(`/${lang}/words/${level}/cards?word=${encodeURIComponent(id)}`);
+  };
 
   const toggleExpand = (id: string) => {
     setExpandedIds((prev) => {
@@ -95,7 +99,11 @@ export function WordsList() {
             className={styles.search}
           />
         </div>
-        <Toggle checked={hideMemorized} onChange={setHideMemorized} label="Hide memorized" />
+        <Toggle
+          checked={hideMemorized}
+          onChange={(checked) => updateSettings({ hideMemorized: checked })}
+          label="Hide memorized"
+        />
       </div>
 
       {loading || !words ? (
@@ -111,6 +119,7 @@ export function WordsList() {
             onToggleMemorized={toggleMemorized}
             expandedIds={expandedIds}
             onToggleExpand={toggleExpand}
+            onRowClick={openFlashcard}
           />
         </>
       )}

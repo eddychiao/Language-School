@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useStudyStore } from "../store/useStudyStore";
 import { useLevelData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
@@ -20,7 +20,10 @@ export function WordsCards() {
   const level = Number(levelParam) || 1;
   const { data, toggleMemorized, updateSettings } = useStudyStore();
   const { words, loading } = useLevelData(lang, level);
-  const [hideMemorized, setHideMemorized] = useState(false);
+  const [searchParams] = useSearchParams();
+  const initialWordId = searchParams.get("word");
+  const appliedInitialWordRef = useRef(false);
+  const hideMemorized = data.settings.hideMemorized;
   const [reversed, setReversed] = useState(false);
   const [orderedWords, setOrderedWords] = useState<Word[]>([]);
 
@@ -36,10 +39,20 @@ export function WordsCards() {
       : orderedWords;
   }, [orderedWords, hideMemorized, data.memorized]);
 
-  const { index, direction, goPrev, goNext, resetIndex } = useFlashcardNav(
+  const { index, direction, goPrev, goNext, resetIndex, goToIndex } = useFlashcardNav(
     filtered.length,
   );
   const current = filtered[index];
+
+  useEffect(() => {
+    if (appliedInitialWordRef.current || !initialWordId || filtered.length === 0) return;
+    const wordIndex = filtered.findIndex((w) => w.id === initialWordId);
+    if (wordIndex >= 0) {
+      goToIndex(wordIndex);
+      appliedInitialWordRef.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtered, initialWordId]);
 
   const memorizedInLevel = useMemo(() => {
     if (!words) return 0;
@@ -92,7 +105,7 @@ export function WordsCards() {
         <Toggle
           checked={hideMemorized}
           onChange={(checked) => {
-            setHideMemorized(checked);
+            updateSettings({ hideMemorized: checked });
             resetIndex();
           }}
           label="Hide memorized"

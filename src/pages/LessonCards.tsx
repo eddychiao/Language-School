@@ -29,7 +29,7 @@ export function LessonCards() {
   );
 
   const [reversed, setReversed] = useState(false);
-  const [hideMemorized, setHideMemorized] = useState(false);
+  const hideMemorized = data.settings.hideMemorized;
   const [orderedWords, setOrderedWords] = useState<Word[]>([]);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export function LessonCards() {
         <Toggle
           checked={hideMemorized}
           onChange={(checked) => {
-            setHideMemorized(checked);
+            updateSettings({ hideMemorized: checked });
             resetIndex();
           }}
           label="Hide memorized"

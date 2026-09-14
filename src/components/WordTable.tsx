@@ -13,6 +13,7 @@ interface WordTableProps {
   onToggleMemorized: (id: string) => void;
   expandedIds: Set<string>;
   onToggleExpand: (id: string) => void;
+  onRowClick?: (id: string) => void;
 }
 
 const ESTIMATED_ROW_HEIGHT = 57;
@@ -25,6 +26,7 @@ export function WordTable({
   onToggleMemorized,
   expandedIds,
   onToggleExpand,
+  onRowClick,
 }: WordTableProps) {
   const parentRef = useRef<HTMLDivElement>(null);
 
@@ -55,12 +57,14 @@ export function WordTable({
                 data-index={virtualRow.index}
                 ref={virtualizer.measureElement}
                 className={styles.row}
+                onClick={onRowClick ? () => onRowClick(word.id) : undefined}
                 style={{
                   position: "absolute",
                   top: 0,
                   left: 0,
                   width: "100%",
                   transform: `translateY(${virtualRow.start}px)`,
+                  cursor: onRowClick ? "pointer" : undefined,
                 }}
               >
                 <span
@@ -83,7 +87,10 @@ export function WordTable({
                   className={`${styles.colMeaning} ${
                     isExpanded ? styles.colMeaningExpanded : ""
                   }`}
-                  onClick={() => onToggleExpand(word.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleExpand(word.id);
+                  }}
                   title={isExpanded ? "Click to collapse" : word.meanings[0]}
                 >
                   {word.meanings[0]}
