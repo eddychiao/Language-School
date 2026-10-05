@@ -92,6 +92,23 @@
   padding-bottom: calc(var(--space-7) + 56px);
 }
 
+/* A quick, layout-stable fade on route change - no exit animation (so
+   there's no blank gap waiting for one) and no vertical motion (so it
+   doesn't fight with pages of different heights). Re-triggers because the
+   wrapper is remounted via its `key` (see AppLayout's transitionKey). */
+.pageTransition {
+  animation: pageFadeIn 0.12s ease;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Mobile-only bottom tab bar. */
 .tabBar {
   position: sticky;

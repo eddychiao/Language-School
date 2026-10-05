@@ -41,21 +41,13 @@ export function Stats() {
     return { right, wrong, accuracy };
   }, [data.stats.sessions]);
 
-  const days = useMemo(() => lastNDays(30), []);
+  const days = useMemo(() => lastNDays(10), []);
 
-  const memorizedOverTime = useMemo(() => {
-    // `daily[day].memorized` is the net change in memorized count *that
-    // day*, not a running total, so carry a cumulative sum forward across
-    // the displayed window (seeded with everything memorized before it).
-    const dayKeys = Object.keys(data.stats.daily).sort();
-    const beforeWindow = dayKeys
-      .filter((d) => d < days[0])
-      .reduce((sum, d) => sum + (data.stats.daily[d].memorized ?? 0), 0);
-    let running = beforeWindow;
-    return days.map((day) => {
-      running += data.stats.daily[day]?.memorized ?? 0;
-      return { label: day.slice(5), value: Math.max(0, running) };
-    });
+  const memorizedPerDay = useMemo(() => {
+    return days.map((day) => ({
+      label: day.slice(5),
+      value: Math.max(0, data.stats.daily[day]?.memorized ?? 0),
+    }));
   }, [data.stats.daily, days]);
 
   const memorizedByLevel = useMemo(() => {
@@ -105,9 +97,9 @@ export function Stats() {
       </div>
 
       <section>
-        <h2 className={styles.sectionTitle}>Words memorized (last 30 days)</h2>
+        <h2 className={styles.sectionTitle}>Words memorized per day (last 10 days)</h2>
         <div className={styles.chartContainer}>
-          <LineChart points={memorizedOverTime} height={280} />
+          <LineChart points={memorizedPerDay} height={280} />
         </div>
       </section>
 

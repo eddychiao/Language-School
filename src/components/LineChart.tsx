@@ -15,6 +15,18 @@ interface LineChartProps {
 
 const VIEW_WIDTH = 600;
 const PADDING_Y = 14;
+const PADDING_LEFT = 28;
+const Y_TICKS = 4;
+
+/** Rounds up to a "nice" axis max (1/2/5 × a power of ten) so the y-axis
+ * doesn't show jagged values like 0, 3.25, 6.5, 9.75. */
+function niceMax(value: number): number {
+  if (value <= Y_TICKS) return Y_TICKS;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(value)));
+  const normalized = value / magnitude;
+  const niceNormalized = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+  return niceNormalized * magnitude;
+}
 
 /** Minimal dependency-free SVG line chart - the app has no charting library,
  * and this is the only chart shape needed (a single time series), so a
@@ -22,13 +34,16 @@ const PADDING_Y = 14;
 export function LineChart({ points, height = 220, labelEvery }: LineChartProps) {
   const gradientId = useId();
 
-  const { linePath, areaPath, coords } = useMemo(() => {
-    const max = Math.max(1, ...points.map((p) => p.value));
+  const { linePath, areaPath, coords, yTicks } = useMemo(() => {
+    const rawMax = Math.max(0, ...points.map((p) => p.value));
+    const max = niceMax(rawMax);
     const plotHeight = height - PADDING_Y * 2;
-    const stepX = points.length > 1 ? VIEW_WIDTH / (points.length - 1) : 0;
+    const plotWidth = VIEW_WIDTH - PADDING_LEFT;
+    const stepX = points.length > 1 ? plotWidth / (points.length - 1) : 0;
+    const yFor = (value: number) => height - PADDING_Y - (value / max) * plotHeight;
     const coords = points.map((p, i) => ({
-      x: points.length > 1 ? i * stepX : VIEW_WIDTH / 2,
-      y: height - PADDING_Y - (p.value / max) * plotHeight,
+      x: PADDING_LEFT + (points.length > 1 ? i * stepX : plotWidth / 2),
+      y: yFor(p.value),
       ...p,
     }));
     const linePath = coords.map((c, i) => `${i === 0 ? "M" : "L"}${c.x},${c.y}`).join(" ");
@@ -36,7 +51,11 @@ export function LineChart({ points, height = 220, labelEvery }: LineChartProps) 
       coords.length > 0
         ? `${linePath} L${coords[coords.length - 1].x},${height} L${coords[0].x},${height} Z`
         : "";
-    return { linePath, areaPath, coords };
+    const yTicks = Array.from({ length: Y_TICKS + 1 }, (_, i) => {
+      const value = Math.round((max / Y_TICKS) * i);
+      return { value, y: yFor(value) };
+    });
+    return { linePath, areaPath, coords, yTicks };
   }, [points, height]);
 
   if (points.length === 0) {
@@ -60,6 +79,20 @@ export function LineChart({ points, height = 220, labelEvery }: LineChartProps) 
             <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
           </linearGradient>
         </defs>
+        {yTicks.map((tick) => (
+          <g key={tick.value}>
+            <line
+              x1={PADDING_LEFT}
+              x2={VIEW_WIDTH}
+              y1={tick.y}
+              y2={tick.y}
+              className={styles.gridline}
+            />
+            <text x={PADDING_LEFT - 6} y={tick.y} className={styles.yLabel}>
+              {tick.value}
+            </text>
+          </g>
+        ))}
         {areaPath && <path d={areaPath} fill={`url(#${gradientId})`} stroke="none" />}
         <path
           d={linePath}

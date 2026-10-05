@@ -38,6 +38,14 @@
   border-color: var(--color-accent);
 }
 
+/* Override the global button:active press-scale (global.css) - a shrinking
+   trigger looks like a glitch on something that opens/closes a list in
+   place. The !important is needed because that rule's `button:active`
+   selector otherwise outranks a single class on specificity. */
+.trigger:active {
+  transform: none !important;
+}
+
 .trigger:focus-visible,
 .trigger[aria-expanded="true"] {
   outline: none;

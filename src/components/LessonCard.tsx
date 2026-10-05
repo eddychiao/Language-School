@@ -45,7 +45,7 @@ export function LessonCard({
           Flashcards
         </button>
         <button type="button" className={styles.primary} onClick={onStartTest}>
-          Test Session
+          Quiz
         </button>
       </div>
     </div>
