@@ -25,7 +25,7 @@ export function Dropdown<T extends string>({
 }: DropdownProps<T>) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+  const listRef = useRef<HTMLUListElement | null>(null);
 
   const selectedIndex = Math.max(
     0,
