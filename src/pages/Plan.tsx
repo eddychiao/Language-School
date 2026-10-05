@@ -6,7 +6,7 @@ import { useLang } from "../lib/useLang";
 import { levelLabel } from "../lib/levelLabel";
 import { LevelChips } from "../components/LevelChips";
 import { LessonCard } from "../components/LessonCard";
-import { Select } from "../components/Select";
+import { Dropdown } from "../components/Dropdown";
 import { buildLessonPlan } from "../lib/lessonPlanner";
 import type { LessonPlan } from "../types";
 import styles from "./Plan.module.css";
@@ -77,52 +77,63 @@ export function Plan() {
         <h2 className={styles.sectionTitle}>Levels</h2>
         <LevelChips lang={lang} levels={allLevels} selected={levels} onChange={setLevels} />
 
-        <h2 className={styles.sectionTitle}>Split by</h2>
-        <div className={styles.splitRow}>
-          <label className={styles.radioLabel}>
-            <input
-              type="radio"
-              checked={splitMode === "size"}
-              onChange={() => setSplitMode("size")}
-            />
-            Words per lesson
-          </label>
-          {splitMode === "size" && (
-            <input
-              type="number"
-              min={1}
-              value={setSizeValue}
-              onChange={(e) => setSetSizeValue(Math.max(1, Number(e.target.value)))}
-              className={styles.numberInput}
-            />
-          )}
-        </div>
-        <div className={styles.splitRow}>
-          <label className={styles.radioLabel}>
-            <input
-              type="radio"
-              checked={splitMode === "count"}
-              onChange={() => setSplitMode("count")}
-            />
-            Number of lessons
-          </label>
-          {splitMode === "count" && (
-            <input
-              type="number"
-              min={1}
-              value={lessonCount}
-              onChange={(e) => setLessonCount(Math.max(1, Number(e.target.value)))}
-              className={styles.numberInput}
-            />
-          )}
-        </div>
+        <div className={styles.compactGrid}>
+          <div className={styles.compactCol}>
+            <h2 className={styles.sectionTitle}>Split by</h2>
+            <div className={styles.splitRow}>
+              <label className={styles.radioLabel}>
+                <input
+                  type="radio"
+                  checked={splitMode === "size"}
+                  onChange={() => setSplitMode("size")}
+                />
+                Words per lesson
+              </label>
+              {splitMode === "size" && (
+                <input
+                  type="number"
+                  min={1}
+                  value={setSizeValue}
+                  onChange={(e) => setSetSizeValue(Math.max(1, Number(e.target.value)))}
+                  className={styles.numberInput}
+                />
+              )}
+            </div>
+            <div className={styles.splitRow}>
+              <label className={styles.radioLabel}>
+                <input
+                  type="radio"
+                  checked={splitMode === "count"}
+                  onChange={() => setSplitMode("count")}
+                />
+                Number of lessons
+              </label>
+              {splitMode === "count" && (
+                <input
+                  type="number"
+                  min={1}
+                  value={lessonCount}
+                  onChange={(e) => setLessonCount(Math.max(1, Number(e.target.value)))}
+                  className={styles.numberInput}
+                />
+              )}
+            </div>
+          </div>
 
-        <h2 className={styles.sectionTitle}>Order</h2>
-        <Select value={order} onChange={(e) => setOrder(e.target.value as LessonPlan["order"])}>
-          <option value="frequency">Frequency (common first)</option>
-          <option value="alphabetical">Alphabetical</option>
-          <option value="random">Random</option>
-        </Select>
+          <div className={styles.compactCol}>
+            <h2 className={styles.sectionTitle}>Order</h2>
+            <Dropdown
+              value={order}
+              onChange={setOrder}
+              ariaLabel="Order"
+              options={[
+                { value: "frequency", label: "Frequency (common first)" },
+                { value: "alphabetical", label: "Alphabetical" },
+                { value: "random", label: "Random" },
+              ]}
+            />
+          </div>
+        </div>
 
         <button
           type="button"

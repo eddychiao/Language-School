@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import type { Language, Word } from "../types";
-import { headword, posLabel } from "../lib/wordDisplay";
+import { headword } from "../lib/wordDisplay";
 import { MemorizedCheckbox } from "./MemorizedCheckbox";
 import styles from "./WordTable.module.css";
 
@@ -41,9 +41,8 @@ export function WordTable({
     <div className={styles.wrapper}>
       <div className={styles.headerRow}>
         <span className={styles.colHanzi}>Word</span>
-        <span className={styles.colPinyin}>{lang === "zh" ? "Pinyin" : "Gender"}</span>
         <span className={styles.colMeaning}>Meaning</span>
-        <span className={styles.colPos}>POS</span>
+        <span className={styles.colPinyin}>{lang === "zh" ? "Pinyin" : "Gender"}</span>
         <span className={styles.colCheck}>Memorized</span>
       </div>
       <div ref={parentRef} className={styles.scroller}>
@@ -80,9 +79,6 @@ export function WordTable({
                     </span>
                   )}
                 </span>
-                <span className={styles.colPinyin}>
-                  {word.lang === "zh" ? word.pinyin : (word.gender ?? "")}
-                </span>
                 <span
                   className={`${styles.colMeaning} ${
                     isExpanded ? styles.colMeaningExpanded : ""
@@ -95,11 +91,8 @@ export function WordTable({
                 >
                   {word.meanings[0]}
                 </span>
-                <span className={styles.colPos}>
-                  {word.pos
-                    .slice(0, 2)
-                    .map((p) => posLabel(word, p))
-                    .join(", ")}
+                <span className={styles.colPinyin}>
+                  {word.lang === "zh" ? word.pinyin : (word.gender ?? "")}
                 </span>
                 <span className={styles.colCheck}>
                   <MemorizedCheckbox

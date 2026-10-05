@@ -7,6 +7,7 @@ import { levelName } from "../lib/levelName";
 import { headword } from "../lib/wordDisplay";
 import { todayKey } from "../lib/date";
 import { ProgressBar } from "../components/ProgressBar";
+import { LineChart } from "../components/LineChart";
 import styles from "./Stats.module.css";
 
 function lastNDays(n: number): string[] {
@@ -40,8 +41,22 @@ export function Stats() {
     return { right, wrong, accuracy };
   }, [data.stats.sessions]);
 
-  const days = useMemo(() => lastNDays(14), []);
-  const maxReviews = Math.max(1, ...days.map((d) => data.stats.daily[d]?.reviews ?? 0));
+  const days = useMemo(() => lastNDays(30), []);
+
+  const memorizedOverTime = useMemo(() => {
+    // `daily[day].memorized` is the net change in memorized count *that
+    // day*, not a running total, so carry a cumulative sum forward across
+    // the displayed window (seeded with everything memorized before it).
+    const dayKeys = Object.keys(data.stats.daily).sort();
+    const beforeWindow = dayKeys
+      .filter((d) => d < days[0])
+      .reduce((sum, d) => sum + (data.stats.daily[d].memorized ?? 0), 0);
+    let running = beforeWindow;
+    return days.map((day) => {
+      running += data.stats.daily[day]?.memorized ?? 0;
+      return { label: day.slice(5), value: Math.max(0, running) };
+    });
+  }, [data.stats.daily, days]);
 
   const memorizedByLevel = useMemo(() => {
     const map = new Map<number, number>();
@@ -90,22 +105,9 @@ export function Stats() {
       </div>
 
       <section>
-        <h2 className={styles.sectionTitle}>Reviews (last 14 days)</h2>
-        <div className={styles.barChart}>
-          {days.map((day) => {
-            const reviews = data.stats.daily[day]?.reviews ?? 0;
-            const height = Math.round((reviews / maxReviews) * 100);
-            return (
-              <div
-                key={day}
-                className={styles.barColumn}
-                title={`${day}: ${reviews} reviews`}
-              >
-                <div className={styles.bar} style={{ height: `${height}%` }} />
-                <span className={styles.barLabel}>{day.slice(5)}</span>
-              </div>
-            );
-          })}
+        <h2 className={styles.sectionTitle}>Words memorized (last 30 days)</h2>
+        <div className={styles.chartContainer}>
+          <LineChart points={memorizedOverTime} height={280} />
         </div>
       </section>
 

@@ -50,12 +50,12 @@
    in sync - they intentionally duplicate the same values. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg: #161925;
-    --color-surface: #1e2233;
-    --color-surface-2: #262b40;
-    --color-border: #313754;
-    --color-text: #edeef2;
-    --color-text-muted: #9aa1b5;
+    --color-bg: #121212;
+    --color-surface: #1c1c1c;
+    --color-surface-2: #262626;
+    --color-border: #363636;
+    --color-text: #ededed;
+    --color-text-muted: #9a9a9a;
 
     --color-accent-hover: color-mix(in srgb, var(--color-accent) 80%, white);
 
@@ -71,12 +71,12 @@
 }
 
 :root[data-theme="dark"] {
-  --color-bg: #161925;
-  --color-surface: #1e2233;
-  --color-surface-2: #262b40;
-  --color-border: #313754;
-  --color-text: #edeef2;
-  --color-text-muted: #9aa1b5;
+  --color-bg: #121212;
+  --color-surface: #1c1c1c;
+  --color-surface-2: #262626;
+  --color-border: #363636;
+  --color-text: #ededed;
+  --color-text-muted: #9a9a9a;
 
   --color-accent-hover: color-mix(in srgb, var(--color-accent) 80%, white);
 

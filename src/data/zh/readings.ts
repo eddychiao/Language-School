@@ -324,4 +324,67 @@ export const READINGS_ZH: ReadingPassage[] = [
       { q: "作者认为应该把精力放在什么上？", a: "创造力、沟通能力，以及不断学习新知识的能力。" },
     ],
   },
+  {
+    id: "beginner-my-pet",
+    difficulty: "beginner",
+    band: "HSK 1–2",
+    title: "我的小狗",
+    titleEn: "My Puppy",
+    paragraphs: [
+      "我家有一只小狗，它的名字叫豆豆。豆豆是白色的，很可爱，它今年两岁了。",
+      "每天早上，我带豆豆去公园散步。它喜欢跑步，也喜欢和别的狗一起玩儿。中午我给它吃饭，它最喜欢吃肉。",
+      "晚上我做作业的时候，豆豆就睡在我旁边。它是我最好的朋友，我非常喜欢它。",
+    ],
+    translation: [
+      "My family has a puppy, and its name is Doudou. Doudou is white and very cute; it's two years old this year.",
+      "Every morning, I take Doudou for a walk in the park. It likes running, and it also likes playing with other dogs. At noon I feed it, and it likes eating meat the most.",
+      "In the evening when I do my homework, Doudou sleeps next to me. It is my best friend, and I like it very much.",
+    ],
+    questions: [
+      { q: "豆豆是什么颜色的？", a: "白色的。" },
+      { q: "豆豆最喜欢吃什么？", a: "肉。" },
+    ],
+  },
+  {
+    id: "intermediate-online-shopping",
+    difficulty: "intermediate",
+    band: "HSK 3–4",
+    title: "网上购物",
+    titleEn: "Shopping Online",
+    paragraphs: [
+      "以前，人们买东西都要去商店，现在很多人喜欢在网上购物。网上东西种类多，价格也比较便宜，而且不用出门就能买到想要的东西。",
+      "我上个星期在网上买了一件衣服和一双鞋。衣服两天就送到了，但是鞋子的大小不太合适，我只好把它寄回去换一下。",
+      "网上购物虽然方便，但是也有一些问题，比如看不到真正的东西，有时候照片和实物不太一样。所以买东西以前，最好先看看别人的评价。",
+    ],
+    translation: [
+      "In the past, people had to go to stores to buy things; now many people like shopping online. Online there are many kinds of things, the prices are relatively cheap, and you can buy what you want without leaving home.",
+      "Last week I bought a piece of clothing and a pair of shoes online. The clothes arrived in two days, but the shoes weren't quite the right size, so I had to mail them back to exchange them.",
+      "Although online shopping is convenient, it also has some problems — for example, you can't see the actual item, and sometimes the photos don't quite match the real thing. So before buying something, it's best to read other people's reviews first.",
+    ],
+    questions: [
+      { q: "作者上星期在网上买了什么？", a: "一件衣服和一双鞋。" },
+      { q: "网上购物有什么问题？", a: "看不到真正的东西，照片和实物有时不一样。" },
+    ],
+  },
+  {
+    id: "advanced-short-video",
+    difficulty: "advanced",
+    band: "HSK 5–6",
+    title: "短视频时代",
+    titleEn: "The Short Video Era",
+    paragraphs: [
+      "短短几年间，短视频平台已经渗透到了生活的方方面面。无论是吃饭、通勤还是睡前，很多人都习惯打开手机，刷上几十分钟甚至几个小时的短视频。这种以秒为单位、高度浓缩的内容，正在悄悄改变人们获取信息和娱乐的方式。",
+      "短视频的优势显而易见：制作门槛低、传播速度快，普通人也能通过一条视频被更多人看到。然而，专家也指出，算法根据用户的喜好不断推送相似内容，容易形成所谓的“信息茧房”，让人越来越难以接触到不同的观点。此外，持续不断的强刺激内容，也让一些人的注意力变得越来越难以集中。",
+      "面对这种趋势，有人选择主动卸载软件，重新找回完整阅读和深度思考的能力；也有人认为，关键不在于拒绝短视频本身，而在于建立健康的使用习惯。无论采取哪种方式，在信息爆炸的时代，保持清醒的判断力，或许才是每个人都需要学习的能力。",
+    ],
+    translation: [
+      "In just a few short years, short-video platforms have permeated every aspect of life. Whether eating, commuting, or before bed, many people are used to opening their phones and scrolling through short videos for tens of minutes or even hours. This highly condensed, second-by-second content is quietly changing how people get information and entertainment.",
+      "The advantages of short videos are obvious: the barrier to making them is low and they spread quickly, so even an ordinary person can be seen by many more people through a single video. However, experts also point out that algorithms keep pushing similar content based on users' preferences, easily forming a so-called \"information cocoon\" that makes it harder and harder for people to encounter different viewpoints. In addition, the constant stream of highly stimulating content also makes it harder for some people's attention to stay focused.",
+      "Facing this trend, some people choose to actively uninstall the apps and regain the ability to read fully and think deeply; others believe the key isn't rejecting short videos themselves, but building healthy usage habits. Whichever approach is taken, in this age of information overload, keeping a clear, sober judgment may be the skill everyone needs to learn.",
+    ],
+    questions: [
+      { q: "什么是“信息茧房”？", a: "算法不断推送相似内容，让人难以接触到不同的观点。" },
+      { q: "面对短视频，文中提到了哪两种做法？", a: "有人选择卸载软件，也有人认为关键是建立健康的使用习惯。" },
+    ],
+  },
 ];

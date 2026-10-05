@@ -42,10 +42,10 @@ export function LessonCard({
           className={styles.secondary}
           onClick={onStudyFlashcards}
         >
-          Study as flashcards
+          Flashcards
         </button>
         <button type="button" className={styles.primary} onClick={onStartTest}>
-          Start test session
+          Test Session
         </button>
       </div>
     </div>

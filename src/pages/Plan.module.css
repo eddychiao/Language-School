@@ -7,24 +7,44 @@
 .builder {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: var(--space-5);
+  padding: var(--space-4);
 }
 
 .sectionTitle {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--color-text-muted);
-  margin: var(--space-2) 0 0;
+  margin: var(--space-1) 0 0;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+.compactGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-5);
+  align-items: start;
+}
+
+.compactCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
 }
 
 .splitRow {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
+}
+
+@media (max-width: 560px) {
+  .compactGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .radioLabel {

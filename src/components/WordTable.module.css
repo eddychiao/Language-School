@@ -8,7 +8,7 @@
 .headerRow,
 .row {
   display: grid;
-  grid-template-columns: 0.7fr 0.55fr 3.2fr 0.75fr 0.9fr;
+  grid-template-columns: 0.7fr 3.2fr 0.55fr 0.9fr;
   align-items: center;
   gap: var(--space-3);
   padding: 0 var(--space-4);
@@ -72,11 +72,6 @@
   white-space: normal;
 }
 
-.colPos {
-  color: var(--color-text-muted);
-  font-size: 0.935rem;
-}
-
 .colCheck {
   display: flex;
   justify-content: flex-end;
@@ -114,9 +109,5 @@
   .colCheck {
     grid-area: check;
     align-items: flex-start;
-  }
-
-  .colPos {
-    display: none;
   }
 }

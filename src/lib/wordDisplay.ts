@@ -7,12 +7,31 @@ export function headword(word: Word): string {
   return word.lang === "zh" ? word.simplified : word.word;
 }
 
-/** Case-insensitive match against the headword, (for zh) pinyin, and meanings -
- * used by the Words list search box. `query` should already be trimmed/lowercased. */
+/** Strips pinyin tone marks (and the umlaut on ü) via Unicode decomposition,
+ * so "tong" can match "tòng"/"tóng"/"tōng" etc. without the caller needing
+ * to type diacritics. */
+export function stripTones(s: string): string {
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/** Case-insensitive, tone-agnostic match against the headword, (for zh)
+ * pinyin across all readings, and meanings - used by the Words list search
+ * box. `query` should already be trimmed/lowercased. */
 export function matchesQuery(word: Word, query: string): boolean {
   if (!query) return true;
   if (headword(word).toLowerCase().includes(query)) return true;
-  if (word.lang === "zh" && word.pinyin.toLowerCase().includes(query)) return true;
+  if (word.lang === "zh") {
+    const tonelessQuery = stripTones(query);
+    const readings = [word.pinyin, ...word.forms.map((f) => f.pinyin)];
+    if (
+      readings.some((p) => {
+        const lower = p.toLowerCase();
+        return lower.includes(query) || stripTones(lower).includes(tonelessQuery);
+      })
+    ) {
+      return true;
+    }
+  }
   return word.meanings.some((m) => m.toLowerCase().includes(query));
 }
 

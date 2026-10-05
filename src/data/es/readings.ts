@@ -322,4 +322,67 @@ export const READINGS_ES: ReadingPassage[] = [
       { q: "¿Qué medidas ensayan algunas ciudades?", a: "Limitar los pisos turísticos o poner tasas a los visitantes." },
     ],
   },
+  {
+    id: "es-beginner-mi-mascota",
+    difficulty: "beginner",
+    band: "A1–A2",
+    title: "Mi mascota",
+    titleEn: "My Pet",
+    paragraphs: [
+      "Tengo un perro pequeño que se llama Rex. Es marrón y muy simpático. Rex tiene tres años.",
+      "Todos los días lo saco a pasear por la mañana y por la noche. Le gusta correr en el parque y jugar con otros perros. Come dos veces al día.",
+      "Cuando hago mis tareas, Rex duerme cerca de mí. Es mi mejor amigo y lo quiero mucho.",
+    ],
+    translation: [
+      "I have a small dog named Rex. He is brown and very friendly. Rex is three years old.",
+      "Every day I take him for a walk in the morning and at night. He likes running in the park and playing with other dogs. He eats twice a day.",
+      "When I do my homework, Rex sleeps near me. He is my best friend and I love him very much.",
+    ],
+    questions: [
+      { q: "¿De qué color es Rex?", a: "Marrón." },
+      { q: "¿Cuántas veces al día come?", a: "Dos veces al día." },
+    ],
+  },
+  {
+    id: "es-intermediate-compras-internet",
+    difficulty: "intermediate",
+    band: "B1",
+    title: "Comprar por internet",
+    titleEn: "Shopping Online",
+    paragraphs: [
+      "Antes, la gente tenía que ir a las tiendas para comprar cualquier cosa. Ahora, muchas personas prefieren comprar por internet porque hay más variedad, los precios suelen ser más bajos y no hace falta salir de casa.",
+      "La semana pasada compré una camiseta y unas zapatillas por internet. La camiseta llegó en dos días, pero las zapatillas no eran de mi talla, así que tuve que devolverlas y pedir otro número.",
+      "Comprar por internet es cómodo, pero también tiene inconvenientes: no puedes ver el producto de verdad, y a veces las fotos no coinciden con la realidad. Por eso, antes de comprar algo, conviene leer las opiniones de otros clientes.",
+    ],
+    translation: [
+      "In the past, people had to go to stores to buy anything. Now, many people prefer to shop online because there's more variety, prices tend to be lower, and you don't need to leave home.",
+      "Last week I bought a T-shirt and some sneakers online. The T-shirt arrived in two days, but the sneakers weren't my size, so I had to return them and order another size.",
+      "Shopping online is convenient, but it also has drawbacks: you can't see the real product, and sometimes the photos don't match reality. That's why, before buying something, it's a good idea to read other customers' reviews.",
+    ],
+    questions: [
+      { q: "¿Qué compró la semana pasada?", a: "Una camiseta y unas zapatillas." },
+      { q: "¿Qué problema tuvo con las zapatillas?", a: "No eran de su talla, así que tuvo que devolverlas." },
+    ],
+  },
+  {
+    id: "es-advanced-videos-cortos",
+    difficulty: "advanced",
+    band: "B2–C1",
+    title: "La era de los vídeos cortos",
+    titleEn: "The Short Video Era",
+    paragraphs: [
+      "En apenas unos años, las plataformas de vídeos cortos se han colado en todos los rincones de la vida cotidiana. Ya sea comiendo, en el transporte público o antes de dormir, mucha gente se ha acostumbrado a abrir el móvil y pasar decenas de minutos, o incluso horas, viendo vídeos de pocos segundos. Este contenido, medido en segundos y altamente concentrado, está cambiando silenciosamente la forma en que las personas consumen información y entretenimiento.",
+      "Las ventajas son evidentes: el coste de producción es bajo y la difusión es rapidísima, de modo que cualquier persona puede llegar a un público enorme con un solo vídeo. Sin embargo, los expertos advierten de que los algoritmos, al recomendar constantemente contenido similar a los gustos del usuario, tienden a crear una especie de \"burbuja informativa\" que dificulta el contacto con puntos de vista distintos. Además, el flujo continuo de estímulos intensos hace que a algunas personas les cueste cada vez más mantener la concentración.",
+      "Ante esta tendencia, algunos optan por desinstalar las aplicaciones para recuperar la capacidad de leer con calma y pensar en profundidad; otros consideran que la clave no está en rechazar los vídeos cortos, sino en desarrollar hábitos de uso saludables. Sea cual sea el camino elegido, en una época de sobrecarga informativa, mantener un criterio propio y despierto quizá sea la habilidad que todos necesitamos aprender.",
+    ],
+    translation: [
+      "In just a few years, short-video platforms have crept into every corner of daily life. Whether eating, commuting, or before falling asleep, many people have gotten used to opening their phone and spending tens of minutes, or even hours, watching videos just seconds long. This content, measured in seconds and highly concentrated, is quietly changing how people consume information and entertainment.",
+      "The advantages are obvious: production costs are low and the content spreads extremely fast, so anyone can reach a huge audience with a single video. However, experts warn that algorithms, by constantly recommending content similar to a user's tastes, tend to create a kind of \"information bubble\" that makes it harder to encounter different points of view. Moreover, the continuous stream of intense stimulation makes it increasingly hard for some people to stay focused.",
+      "Faced with this trend, some choose to uninstall the apps to regain the ability to read calmly and think deeply; others believe the key isn't rejecting short videos themselves, but developing healthy usage habits. Whichever path is chosen, in an age of information overload, keeping one's own clear-headed judgment may be the skill everyone needs to learn.",
+    ],
+    questions: [
+      { q: "¿Qué es la \"burbuja informativa\" según el texto?", a: "Cuando los algoritmos recomiendan contenido similar y dificultan ver puntos de vista distintos." },
+      { q: "¿Qué dos actitudes se mencionan ante los vídeos cortos?", a: "Desinstalar las aplicaciones, o desarrollar hábitos de uso saludables." },
+    ],
+  },
 ];

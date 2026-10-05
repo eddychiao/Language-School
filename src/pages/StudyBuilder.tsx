@@ -5,7 +5,7 @@ import { useLevelsData, levelIndex } from "../store/useLevelData";
 import { useLang } from "../lib/useLang";
 import { LevelChips } from "../components/LevelChips";
 import { Toggle } from "../components/Toggle";
-import { Select } from "../components/Select";
+import { Dropdown } from "../components/Dropdown";
 import {
   buildSession,
   matchingCandidates,
@@ -38,7 +38,7 @@ export function StudyBuilder() {
       : 20,
   );
   const [onlyUnmemorized, setOnlyUnmemorized] = useState(false);
-  const [order, setOrder] = useState<SessionConfig["order"]>("due");
+  const [order, setOrder] = useState<SessionConfig["order"]>("random");
   const [reversed, setReversed] = useState(false);
 
   const { words: loadedPool, loading } = useLevelsData(lang, levels);
@@ -120,11 +120,16 @@ export function StudyBuilder() {
 
       <section>
         <h2 className={styles.sectionTitle}>Order</h2>
-        <Select value={order} onChange={(e) => setOrder(e.target.value as SessionConfig["order"])}>
-          <option value="due">Due first</option>
-          <option value="frequency">Frequency (common first)</option>
-          <option value="random">Random</option>
-        </Select>
+        <Dropdown
+          value={order}
+          onChange={setOrder}
+          ariaLabel="Order"
+          options={[
+            { value: "random", label: "Random" },
+            { value: "due", label: "Due first" },
+            { value: "frequency", label: "Frequency (common first)" },
+          ]}
+        />
       </section>
 
       <p className={styles.preview}>
